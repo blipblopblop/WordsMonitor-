@@ -26,7 +26,7 @@ struct wc {
 };
 
 // returns a postive hash value
-/*int
+int
 hashFunc(char *str)
 {
     int hash = 7;
@@ -35,18 +35,6 @@ hashFunc(char *str)
     for(int i = 0; i < length; i++)
         hash = (hash * 31) + *(str + i);
     return hash & 0x7FFFFFFF;
-}*/
-
-unsigned long
-hashFunc(char *str)
-{
-    unsigned long hash = 5381;
-    int length = strlen(str);
-    for(int i = 0; i < length; i++, ++str){
-        hash =( (hash << 5) + hash )+ (*str);
-    }
-    
-    return hash;
 }
 
 /* Allocates memory for a new node. Initializes the new node's members */
@@ -115,7 +103,7 @@ struct wc *wc_init(char *word_array, long size)
             ctr++;
             i++;
             
-            hash = ((hash << 5) + hash) + (wac);
+            hash = ((hash << 3) + hash) + (wac);
             wac = word_array[ctr];
         }   
         word[i] = '\0';
